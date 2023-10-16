@@ -148,6 +148,10 @@ func SJFSchedule(w io.Writer, title string, processes []Process) {
     outputTitle(w, title)
     outputGantt(w, gantt)
     outputSchedule(w, schedule, aveWait, aveTurnaround, aveThroughput)
+    fmt.Fprintf("---FCFS---")
+    fmt.Fprintf(w, "Average turnaround time: ", float64(totalTurnaround)/float64(len(processes)))
+    fmt.Fprintf(w, "Average waiting time: ", float64(totalWaiting)/float64(len(processes)))
+    fmt.Fprintf(w, "Throughput: ", float64(len(processes))/float64(currentTime))
 }
 
 func findShortestJob(remaining []Process, serviceTime int64) *Process {
@@ -213,7 +217,7 @@ func SJFPrioritySchedule(w io.Writer, title string, processes []Process) {
         totalTurnaround += processes[i].Turnaround
         totalWaiting += processes[i].Waiting
     }
-
+    fmt.Fprintf("---SJFP---")
     fmt.Fprintf(w, "Average turnaround time: ", float64(totalTurnaround)/float64(len(processes)))
     fmt.Fprintf(w, "Average waiting time: ", float64(totalWaiting)/float64(len(processes)))
     fmt.Fprintf(w, "Throughput: ", float64(len(processes))/float64(currentTime))
@@ -274,7 +278,7 @@ func RRSchedule(w io.Writer, title string, processes []Process, quantum int) {
             qIndex = (qIndex + 1) % qSize
         }
     }
-
+    fmt.Fprintf("---priority---")
     fmt.Fprintf(w, "Average turnaround time: ", float64(totalTurnaroundTime)/float64(n))
     fmt.Fprintf(w, "Average waiting time: ", float64(totalWaitingTime)/float64(n))
     fmt.Fprintf(w, "Average throughput: ", float64(n)/float64(currentTime))
